@@ -45,7 +45,6 @@ class Scrape:
             information[index] = value
 
 
-
         #Getting Images
         containerImg = driver.find_element(By.CSS_SELECTOR, "div.galleria-thumbnails-container")
 
@@ -55,19 +54,10 @@ class Scrape:
             im = im.find_element(By.TAG_NAME, "img").get_attribute("src")
             urlsImgs.append(im)
 
-        information["urlImages"] = urlsImgs
-        # urlImgs = ''
-        # for link in information["urlImages"]:
-        #     urlImgs = link + ' , '
-        #
-        # information["urlImages"] = urlImgs
-
-
-
+        information["urlImages"] = ' '.join([str(item) for item in urlsImgs])
 
         driver.close()
         print(information)
-
 
 
         lista = []
