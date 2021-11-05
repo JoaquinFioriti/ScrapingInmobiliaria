@@ -1,5 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+import pandas as pd
+
 
 
 class Scrape:
@@ -27,6 +29,7 @@ class Scrape:
             'Square Feet' : '',
             'School District' : '',
             'Half Bathrooms' : '',
+            'urlImages':[]
         }
 
         infos = container.find_elements(By.XPATH,"//div[@class='form-group informationblockheight col-md-4 col-sm-12 ng-binding']")
@@ -41,7 +44,7 @@ class Scrape:
             value = text[1]
             information[index] = value
 
-        print(information)
+
 
         #Getting Images
         containerImg = driver.find_element(By.CSS_SELECTOR, "div.galleria-thumbnails-container")
@@ -50,9 +53,31 @@ class Scrape:
         urlsImgs = []
         for im in images:
             im = im.find_element(By.TAG_NAME, "img").get_attribute("src")
-            urlsImgs.append(self.urlBase+im)
+            urlsImgs.append(im)
+
+        information["urlImages"] = urlsImgs
+        # urlImgs = ''
+        # for link in information["urlImages"]:
+        #     urlImgs = link + ' , '
+        #
+        # information["urlImages"] = urlImgs
+
+
+
 
         driver.close()
+        print(information)
+
+
+
+        lista = []
+        lista.append(information)
+
+        dataFrame = pd.DataFrame(lista)
+        dataFrame.to_excel("output.xlsx")
+
+
+
 
 
 
